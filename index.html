@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Water Jug Solver - State Space Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Water Jug Problem Solver</h1>
+            <p>State Space Search (BFS & DFS) Implementation</p>
+        </header>
+
+        <div class="app-grid">
+            <!-- Left Side: Controls and Visualization -->
+            <div class="left-panel">
+                <section class="controls">
+                    <div class="input-group">
+                        <label for="capacityA">Jug A Capacity:</label>
+                        <input type="number" id="capacityA" value="4" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="capacityB">Jug B Capacity:</label>
+                        <input type="number" id="capacityB" value="3" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="target">Target Volume:</label>
+                        <input type="number" id="target" value="2" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="algorithm">Algorithm:</label>
+                        <select id="algorithm">
+                            <option value="bfs">BFS</option>
+                            <option value="dfs">DFS</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button id="solveBtn" class="primary-btn">Find Solution</button>
+                        <button id="resetBtn" class="secondary-btn">Reset</button>
+                    </div>
+                </section>
+
+                <section id="visualization" class="visualization">
+                    <div class="jug-container">
+                        <div class="jug-wrapper">
+                            <div id="jugA" class="jug">
+                                <div class="water"></div>
+                                <span class="label">Jug A</span>
+                            </div>
+                            <div class="jug-info">
+                                <span id="labelA">0 / 4 L</span>
+                            </div>
+                        </div>
+                        <div class="jug-wrapper">
+                            <div id="jugB" class="jug">
+                                <div class="water"></div>
+                                <span class="label">Jug B</span>
+                            </div>
+                            <div class="jug-info">
+                                <span id="labelB">0 / 3 L</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="status" class="status-message"></div>
+                </section>
+            </div>
+
+            <!-- Right Side: Explanation and Solution Steps -->
+            <div class="right-panel">
+                <section class="solution-steps">
+                    <h3>Solution Path</h3>
+                    <div id="stepsList" class="steps-list">
+                        <p class="placeholder">Click "Find Solution" to see the steps.</p>
+                    </div>
+                    <div class="playback-controls" style="display: none;">
+                        <button id="prevStep" class="nav-btn">&larr;</button>
+                        <span id="stepCounter">0/0</span>
+                        <button id="nextStep" class="nav-btn">&rarr;</button>
+                    </div>
+                </section>
+
+                <section class="explanation">
+                    <h3>How it Works (AI Logic)</h3>
+                    <div class="logic-card">
+                        <h4>Production Rules</h4>
+                        <ul>
+                            <li><b>Fill:</b> Fill a jug completely.</li>
+                            <li><b>Empty:</b> Empty a jug.</li>
+                            <li><b>Pour:</b> Transfer water.</li>
+                        </ul>
+                    </div>
+                    <div class="logic-card">
+                        <h4>Search Strategies</h4>
+                        <p><b>BFS (Breadth-First Search):</b> Shortest path.</p>
+                        <p><b>DFS (Depth-First Search):</b> Deep exploration.</p>
+                    </div>                </section>
+            </div>
+        </div>
+
+        <footer>
+            <p>Built with AI State Space Search Logic</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
