@@ -21,7 +21,7 @@ public class WaterJugSolver {
         Queue<State> open = new LinkedList<>();
         Set<State> closed = new HashSet<>();
 
-        State initial = new State(0, 0, "Initial State", null);
+        State initial = new State(0, 0, "Both jugs empty", null);
         open.add(initial);
         closed.add(initial);
 

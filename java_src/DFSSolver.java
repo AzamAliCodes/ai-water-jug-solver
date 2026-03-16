@@ -15,7 +15,7 @@ public class DFSSolver {
         Stack<State> open = new Stack<>(); // LIFO Stack for DFS
         Set<State> closed = new HashSet<>();
 
-        State initial = new State(0, 0, "Initial State", null);
+        State initial = new State(0, 0, "Both jugs empty", null);
         open.push(initial);
         // Note: We don't mark initial as visited until we pop it, 
         // which is a common way to handle DFS state expansion.

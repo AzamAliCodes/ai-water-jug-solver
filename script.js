@@ -37,18 +37,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // BFS/DFS Solver
     function solveWaterJug(capA, capB, target, type = 'bfs') {
-        const queue = [{ a: 0, b: 0, history: [] }]; // State objects
+        const queue = [{ a: 0, b: 0, history: [{ a: 0, b: 0, action: "Both jugs empty" }] }]; // State objects
         const visited = new Set();
         const visitedKey = (a, b) => `${a},${b}`;
         
         if (type === 'bfs') visited.add("0,0");
 
         while (queue.length > 0) {
-            // BFS = shift (FIFO), DFS = pop (LIFO)
             const current = type === 'bfs' ? queue.shift() : queue.pop();
             const { a, b, history } = current;
 
-            // For DFS, mark visited after popping
             if (type === 'dfs') {
                 if (visited.has(visitedKey(a, b))) continue;
                 visited.add(visitedKey(a, b));
@@ -56,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Check if goal reached
             if (a === target || b === target) {
-                return [...history, { a, b, action: "Goal Reached!" }];
+                return history;
             }
 
             const possibleStates = [
@@ -80,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const key = visitedKey(state.a, state.b);
                 if (!visited.has(key)) {
                     if (type === 'bfs') visited.add(key); 
-                    queue.push({ ...state, history: [...history, { a, b, action: state.action }] });
+                    queue.push({ ...state, history: [...history, { a: state.a, b: state.b, action: state.action }] });
                 }
             }
         }
