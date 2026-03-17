@@ -29,13 +29,13 @@ The problem is modeled as a state-space tree where each node represents `(Jug A,
 
 ## 🛠️ How to Run
 
-### Web Version (Online/Visual)
+### Web Version (Visual)
 Open the `index.html` file in any modern web browser or visit the **GitHub Pages** deployment.
 1.  Enter jug capacities and the target volume.
 2.  Select the desired algorithm (BFS or DFS).
 3.  Click **Find Solution** and use the `←` and `→` buttons to step through.
 
-### Java Version (Offline/CLI)
+### Java Version (CLI)
 The Java implementation is fully independent and can be run from the terminal.
 1.  Open a terminal in the project root folder.
 2.  **Compile**:
