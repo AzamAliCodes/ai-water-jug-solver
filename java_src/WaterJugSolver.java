@@ -83,7 +83,8 @@ public class WaterJugSolver {
     }
 
     public boolean isSolvable() {
-        if (target > Math.max(capA, capB)) return false;
+        if (target > Math.max(capA, capB))
+            return false;
         return target % gcd(capA, capB) == 0;
     }
 }

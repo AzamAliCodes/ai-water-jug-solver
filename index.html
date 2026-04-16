@@ -34,6 +34,9 @@
                         <select id="algorithm">
                             <option value="bfs">BFS</option>
                             <option value="dfs">DFS</option>
+                            <option value="ucs">Uniform Cost Search (UCS)</option>
+                            <option value="gbfs">Greedy Best-First Search (GBFS)</option>
+                            <option value="astar">A* Algorithm</option>
                         </select>
                     </div>
                     <div class="button-group">
@@ -93,8 +96,11 @@
                     </div>
                     <div class="logic-card">
                         <h4>Search Strategies</h4>
-                        <p><b>BFS (Breadth-First Search):</b> Shortest path.</p>
-                        <p><b>DFS (Depth-First Search):</b> Deep exploration.</p>
+                        <p><b>BFS:</b> Shortest path (Uninformed).</p>
+                        <p><b>DFS:</b> Deep exploration (Uninformed).</p>
+                        <p><b>UCS:</b> Cost-based expansion (Uninformed).</p>
+                        <p><b>GBFS:</b> Heuristic-based, fast but not optimal (Informed).</p>
+                        <p><b>A*:</b> Cost + Heuristic, optimal and efficient (Informed).</p>
                     </div>                </section>
             </div>
         </div>
