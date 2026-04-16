@@ -20,6 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let solutionPath = [];
     let currentStepIndex = 0;
+    let hasSolvedOnce = false;
+
+    const algorithmSelect = document.getElementById('algorithm');
+    algorithmSelect.addEventListener('change', () => {
+        if (hasSolvedOnce) {
+            solveBtn.click();
+        }
+    });
 
     // GCD function to check solvability
     function gcd(a, b) {
@@ -35,19 +43,40 @@ document.addEventListener('DOMContentLoaded', () => {
         return target % gcd(a, b) === 0;
     }
 
-    // BFS/DFS Solver
+    // Solver for BFS, DFS, UCS, GBFS, A*
     function solveWaterJug(capA, capB, target, type = 'bfs') {
-        const queue = [{ a: 0, b: 0, history: [{ a: 0, b: 0, action: "Both jugs empty" }] }]; // State objects
+        const queue = [{ a: 0, b: 0, history: [{ a: 0, b: 0, action: "Both jugs empty" }], g: 0 }];
         const visited = new Set();
         const visitedKey = (a, b) => `${a},${b}`;
         
         if (type === 'bfs') visited.add("0,0");
 
-        while (queue.length > 0) {
-            const current = type === 'bfs' ? queue.shift() : queue.pop();
-            const { a, b, history } = current;
+        const getHeuristic = (a, b) => Math.min(Math.abs(a - target), Math.abs(b - target));
 
-            if (type === 'dfs') {
+        while (queue.length > 0) {
+            // Priority queue logic for UCS, GBFS, A*
+            if (type === 'ucs' || type === 'gbfs' || type === 'astar') {
+                queue.sort((node1, node2) => {
+                    let f1, f2;
+                    if (type === 'ucs') {
+                        f1 = node1.g;
+                        f2 = node2.g;
+                    } else if (type === 'gbfs') {
+                        f1 = getHeuristic(node1.a, node1.b);
+                        f2 = getHeuristic(node2.a, node2.b);
+                    } else { // astar
+                        f1 = node1.g + getHeuristic(node1.a, node1.b);
+                        f2 = node2.g + getHeuristic(node2.a, node2.b);
+                    }
+                    return f1 - f2;
+                });
+            }
+
+            const current = (type === 'dfs') ? queue.pop() : queue.shift();
+            const { a, b, history, g } = current;
+
+            // For algorithms other than BFS, mark visited upon popping (expanding)
+            if (type !== 'bfs') {
                 if (visited.has(visitedKey(a, b))) continue;
                 visited.add(visitedKey(a, b));
             }
@@ -76,9 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             for (const state of possibleStates) {
                 const key = visitedKey(state.a, state.b);
-                if (!visited.has(key)) {
-                    if (type === 'bfs') visited.add(key); 
-                    queue.push({ ...state, history: [...history, { a: state.a, b: state.b, action: state.action }] });
+                if (type === 'bfs') {
+                    if (!visited.has(key)) {
+                        visited.add(key);
+                        queue.push({ ...state, history: [...history, { a: state.a, b: state.b, action: state.action }], g: g + 1 });
+                    }
+                } else {
+                    // For DFS, UCS, GBFS, A* we push generated nodes and handle cycle checking upon popping
+                    if (!visited.has(key)) {
+                        queue.push({ ...state, history: [...history, { a: state.a, b: state.b, action: state.action }], g: g + 1 });
+                    }
                 }
             }
         }
@@ -127,10 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     solveBtn.addEventListener('click', () => {
+        hasSolvedOnce = true;
         const capA = parseInt(capAInput.value);
         const capB = parseInt(capBInput.value);
         const target = parseInt(targetInput.value);
-        const algoType = document.getElementById('algorithm').value;
+        const algoType = algorithmSelect.value;
 
         if (isNaN(capA) || isNaN(capB) || isNaN(target)) {
             statusMsg.textContent = "Please enter valid numbers.";
@@ -172,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playbackControls.style.display = 'none';
         solutionPath = [];
         currentStepIndex = 0;
+        hasSolvedOnce = false;
     });
 
     prevBtn.addEventListener('click', () => {
